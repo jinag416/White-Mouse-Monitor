@@ -31,6 +31,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const router = useRouter()
 
@@ -54,21 +55,35 @@ const validateInput = () => {
 const handleLogin = async () => {
   const xssPattern = /(~|\{|\}|"|'|<|>|\?)/g
   if (xssPattern.test(loginForm.username) || xssPattern.test(loginForm.password)) {
-    errorMessage('警告:输入内容包含非法字符');
+    errorMessage('警告:输入内容包含非法字符')
     return
   }
 
   try {
-    const safeUsername = encodeURIComponent(loginForm.username)
-    const safePassword = encodeURIComponent(loginForm.password)
-    console.log('登录请求:', { username: safeUsername, password: safePassword })
+    const res = await axios.post('http://localhost:8080/login', null, {
+      params: {
+        username: loginForm.username,
+        password: loginForm.password
+      }
+    })
 
-    const expires = new Date(Date.now() + 3600 * 1000).toUTCString()
-    document.cookie = `authToken=yourAuthToken; path=/; expires=${expires}`
+    if (res.data === '登录成功') {
+      alert('登录成功，即将进入主页')
+      
+      // ✅【关键 1】存储 token，让路由守卫放行
+      localStorage.setItem('token', 'login_success')
 
-    router.push('/home')
+      // ✅【关键 2】跳主页
+      setTimeout(() => {
+        router.push('/home')
+      }, 100)
+    } else {
+      errorMessage(res.data)
+    }
+
   } catch (error) {
-    errorMessage('登录失败，请稍后重试');
+    errorMessage('登录失败，请检查后端是否启动')
+    console.error(error)
   }
 }
 
