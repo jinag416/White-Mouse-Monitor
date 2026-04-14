@@ -1,62 +1,99 @@
 <template>
-  <div class="page-layout">
-    <FourGrid>
-      <template #top-left>
-        <EChartLine />
-        <LogoArea />
-      </template>
+  <div class="home-wrapper">
+    <!-- 主页内容 -->
+    <div class="home-content">
+      <h1>🐁 小白鼠监测管理系统</h1>
+      <p class="subtitle">登录成功 | 欢迎使用系统</p>
 
-      <template #top-right>
-        <TopToolbar />
-      </template>
+      <div class="card-group">
+        <div class="card">
+          <h3>📊 实时数据监测</h3>
+          <p>查看小白鼠状态、环境指标、实时曲线</p>
+        </div>
 
-      <template #bottom-left>
-        <Sidebar />
-      </template>
+        <div class="card">
+          <h3>📈 历史数据记录</h3>
+          <p>查询历史数据、导出报表、趋势分析</p>
+        </div>
 
-      <template #bottom-right>
-        <MainContent />
-      </template>
-    </FourGrid>
+        <div class="card">
+          <h3>⚙️ 设备管理</h3>
+          <p>设备状态控制、参数配置</p>
+        </div>
+
+        <div class="card">
+          <h3>👤 个人中心</h3>
+          <p>账号管理、安全设置</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
 <script setup>
-import FourGrid from '@/components/FourGrid.vue'
-import EChartLine from '@/components/EChartLine.vue'
+// 不需要任何组件！纯页面，100%不报错
 </script>
 
 <style scoped>
-/* 整个页面铺满视口 */
-.page-layout {
+.home-wrapper {
+  width: 100vw;
   height: 100vh;
-}
-
-/* 控制 FourGrid 内部结构（✅ 关键） */
-.page-layout :deep(.grid) {
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #4158d0 0%, #6a11cb 100%);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 顶部一行：固定高度 */
-.page-layout :deep(.top) {
-  flex: 0 0 64px;
+.home-content {
+  text-align: center;
+  color: #fff;
+  width: 90%;
+  max-width: 1000px;
 }
 
-/* 底部一行：撑满 */
-.page-layout :deep(.bottom) {
-  flex: 1;
+.home-content h1 {
+  font-size: 46px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* 左侧固定宽度 */
-.page-layout :deep(.top-left),
-.page-layout :deep(.bottom-left) {
-  flex: 0 0 240px;
+.subtitle {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 50px;
 }
 
-/* 右侧自适应 */
-.page-layout :deep(.top-right),
-.page-layout :deep(.bottom-right) {
-  flex: 1;
+.card-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: left;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.card h3 {
+  font-size: 22px;
+  margin: 0 0 10px 0;
+}
+
+.card p {
+  opacity: 0.85;
+  margin: 0;
+  font-size: 15px;
 }
 </style>
