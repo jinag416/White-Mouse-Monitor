@@ -350,7 +350,7 @@ export default {
 }
 
 .line-ch .line {
-  borderart-radius: 2px;
+  border-radius: 2px;
 }
 
 .chart-label {
